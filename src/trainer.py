@@ -164,8 +164,9 @@ class SegmentationTrainer:
             image, mask, filename = batch
             image, mask = image.to(self.device), mask.to(self.device)
             self.optimizer.zero_grad()  # set the gradients to zero
-            pred_mask = self.model(image)
-            loss = self.compute_losses(y_pred=pred_mask, y_true=mask)
+            pred_mask, _ = self.model(image)
+            loss = self.compute_losses(y_pred_stage_1=pred_mask, y_true_stage_1=mask,
+                                       y_pred_stage_2=pred_mask, y_true_stage_2=mask)
 
             if train:
                 loss.backward()  # backward pass
@@ -219,12 +220,15 @@ class SegmentationTrainer:
         utils.write_to_json_file(content=config_dict,
                                  path=os.path.join(self.log_path, "config.json"))
 
-    def compute_losses(self, y_true, y_pred):
-    #def compute_losses(self, y_true, y_pred , y_pred_binary, y_true_binary):
-        normal_loss = self.mse(input=y_pred, target=y_true) + 1 - losses.dice_coeff(pred=y_pred, target=y_true)
-        #normal_loss = 1 - losses.f_beta_loss(pred=y_pred,gt=y_true)
+    def compute_losses(self, y_true_stage_1, y_pred_stage_1,
+                       y_true_stage_2, y_pred_stage_2,
+                       stage_1_loss="mse_dice"):
+        if stage_1_loss == "f_beta":
+            stage_1_loss = 1 - losses.f_beta_loss(pred=y_pred_stage_1, gt=y_true_stage_1)
+        elif stage_1_loss == "mse_dice":
+            stage_1_loss = self.mse(input=y_pred_stage_1, target=y_true_stage_1) + \
+                           1 - losses.dice_coeff(pred=y_pred_stage_1, target=y_true_stage_1)
 
-        #binary_loss = self.mse(input=y_pred_binary, target=y_true_binary) + \
-        #              1 - losses.dice_coeff(pred=y_pred_binary, target=y_true_binary)
-        #return 0.5 * normal_loss + 0.5 * binary_loss
-        return normal_loss
+        stage_2_loss = self.mse(input=y_pred_stage_2, target=y_true_stage_2) + \
+                      1 - losses.dice_coeff(pred=y_pred_stage_2, target=y_true_stage_2)
+        return 0.5 * stage_1_loss + 0.5 * stage_2_loss

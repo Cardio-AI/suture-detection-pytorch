@@ -25,7 +25,7 @@ class TrainingOptions:
         self.parser.add_argument("--data_split",
                                  type=str,
                                  help="name of split located in split dir",
-                                 default="mkr_challenge_lr")
+                                 default="mkr_dataset")
 
         self.parser.add_argument("--log_dir",
                                  type=str,

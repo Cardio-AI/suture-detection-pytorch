@@ -120,12 +120,8 @@ class UNet(nn.Module):
         x = self.up3(x, x2)
         x = self.up4(x, x1)
         logits = self.outc(x)
-        return logits
 
-        #logits = self.gauss(logits, (3, 3), sigma=(1, 1))
-        #binary_coords, binary = self.sftargmax(logits, (3, 3), (1, 1), (1, 1), output_value=True)
-        #return binary, logits
+        logits = self.gauss(logits, (3, 3), sigma=(1, 1))
+        binary_coords, binary = self.sftargmax(logits, (3, 3), (1, 1), (1, 1), output_value=True)
+        return binary, logits
 
-        #logits = gaussian_blur2d(logits, (3,3), sigma=(1, 1))
-        #binary_coords, binary = conv_soft_argmax2d(logits, (3, 3), (1, 1), (1, 1), output_value=True)
-        #return binary, logits

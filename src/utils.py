@@ -13,7 +13,6 @@ from PIL import Image
 import torch
 import numpy as np
 from ipyfilechooser import FileChooser
-from torch.autograd import Variable
 
 
 def set_cwd():
