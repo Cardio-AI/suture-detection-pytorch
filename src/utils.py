@@ -423,3 +423,23 @@ def evaluate(predictions, labels, radius):
         [tp_prediction for tp_prediction in true_positive_predictions if tp_prediction["label_index"] == index]) == 0])
 
     return true_positive, false_positive, false_negative
+
+
+def write_list_to_text_file(save_path, text_list, verbose=True):
+    """
+    Function to write a list to a text file.
+    Each element of the list is written to a new line.
+    Note: Existing text in the file will be overwritten!
+    :param save_path: Path to save-should be complete with .txt extension)
+    :param text_list: List of text-each elem of list written in new line)
+    :param verbose: If true, prints success message to console
+    :return: No return, writes file to disk and prints a success message
+    """
+    with open(save_path, 'w+') as write_file:
+        for text in text_list:
+            if isinstance(text, str):
+                write_file.write(text + '\n')
+            else:
+                write_file.write(str(text) + '\n')
+        write_file.close()
+    if verbose: print("Text file successfully written to disk at {}".format(save_path))
