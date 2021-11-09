@@ -22,9 +22,11 @@ There are two ways this environment can be set up:
 
 1. Cloning conda environment (recommended)
 ```
-conda env create -f detcyclegan.yml
-conda activate detcyclegan
+conda env create -f suture_detection_pytorch.yml
+conda activate suture_detection_pytorch
 ```
+If the installation from .yml file does not work, it may be a [cuda error](https://githubmemory.com/repo/markstrefford/running-detectron2-on-windows-wsl2-rtx30xx/issues/2?page=4).
+The solution is to either install the failed packages via pip, or use the pip requirements file here. 
 
 2. Installing requirements
 ```
