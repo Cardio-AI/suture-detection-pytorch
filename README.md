@@ -11,8 +11,19 @@ Please see the [license file](LICENSE) for terms os use of this repo.
 If you find our work useful in your research please consider citing our paper:
 
 ```
-Sharan, L., Romano, G., Brand, J. et al. Point detection through multi-instance deep heatmap regression for 
-sutures in endoscopy. Int J CARS (2021). https://doi.org/10.1007/s11548-021-02523-w
+@article{sharan_point_2021,
+	title = {Point detection through multi-instance deep heatmap regression for sutures in endoscopy},
+	issn = {1861-6429},
+	url = {https://doi.org/10.1007/s11548-021-02523-w},
+	doi = {10.1007/s11548-021-02523-w},
+	language = {en},
+	urldate = {2021-11-16},
+	journal = {International Journal of Computer Assisted Radiology and Surgery},
+	author = {Sharan, Lalith and Romano, Gabriele and Brand, Julian and Kelm, Halvar and Karck, Matthias and De Simone,
+	Raffaele and Engelhardt, Sandy},
+	month = nov,
+	year = {2021}
+}
 ```
 
 ### Setup
@@ -26,7 +37,7 @@ conda env create -f suture_detection_pytorch.yml
 conda activate suture_detection_pytorch
 ```
 If the installation from .yml file does not work, it may be a [cuda error](https://githubmemory.com/repo/markstrefford/running-detectron2-on-windows-wsl2-rtx30xx/issues/2?page=4).
-The solution is to either install the failed packages via pip, or use the pip requirements file here. 
+The solution is to either install the failed packages via pip, or use the pip requirements file here.
 
 2. Installing requirements
 ```
